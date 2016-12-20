@@ -72,7 +72,8 @@
 		lookForCoord: function() {
 			var current = app.objectGeojson.features[app.counter];
 			var codePostal = current.properties.codePostal;
-			if (codePostal) {
+			var prenom = current.properties.prenom;
+			if (codePostal && prenom) {
 				var urlCoord = "http://nominatim.openstreetmap.org/search.php?country=france&postalcode=" + codePostal + "&format=json";
 				axios.get(urlCoord)
 				.then(function(response){
