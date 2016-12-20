@@ -49,7 +49,7 @@
 						var htmlProfile = Mustache.to_html(popUpTemplate, feature.properties);
 						marker.bindPopup(htmlProfile);
 
-						// sert pour mail si on ajoute une page contact
+						/* sert pour mail si on ajoute une page contact
 						$(marker).on('click', function(e) {
 							var dataStorage = {
 								id: e.currentTarget.feature.properties.id,
@@ -58,8 +58,8 @@
 							}
 							var dataStorage_json = JSON.stringify(dataStorage);
 							sessionStorage.setItem("dataStorage", dataStorage_json);
-						});
-						// fin partie pour mail
+						});*/
+						
 						return marker;
 					}
 				});
