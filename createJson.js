@@ -6,6 +6,7 @@ var values = require('./values.js');
 
 var curseur = 0;
 
+/* Tableau regroupant les informations selon la spreadsheet appelée */
 var groupTable= [
 	{
 		spreadsheetId: config.spreadsheetIdToulouse,
@@ -15,6 +16,7 @@ var groupTable= [
 /* Appel de la fonction principale */
 getDataGsheets(groupTable);
 
+/* Extraction des spreadsheets grâce à une boucle et des promesses via la fonction next */
 function getDataGsheets(table){
 	for (var i = 0; i < table.length; i++){
 		gsjson({
@@ -32,6 +34,8 @@ function getDataGsheets(table){
 	}
 }
 
+/* Lorsqu'une spreadsheet a été extraite, on réorganise le fichier Json comme prédéfini dans les keys de values.js . 
+Les valeurs undefined sont remplacées par des chaines de caractères vides. */
 function next(result, table){
 	groupTable[curseur].output = reorganizeJson(result, values);
 	curseur ++;
