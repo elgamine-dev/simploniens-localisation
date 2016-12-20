@@ -29,7 +29,6 @@ function getDataGsheets(table){
 			console.log(err.stack);
 		})
 		.then(function(result){
-			// console.log(result);
 			next(result, table);
 		});
 	}
@@ -39,10 +38,9 @@ function getDataGsheets(table){
 Les valeurs undefined sont remplacées par des chaines de caractères vides. */
 function next(result, table){
 	table[curseur].output = reorganizeJson(result, values);
-	console.log(table[curseur].output);
 	curseur ++;
 	if(curseur === table.length){
-		var fileJson = createJson(groupTable[0].output);
+		var fileJson = createJson(table);
 		ecritureJson(fileJson, __dirname + '/public/simploniens.json');
 	}
 }
@@ -67,9 +65,12 @@ function createId(object, nom, prenom){
 	object.id = md5(nom + prenom);
 }
 
-function createJson(array1, array2){
+function createJson(table){
 	var Json = {}
-	Json.marrainage = array1.concat(array2);
+	Json.simploniens = [];
+	for(var i = 0; i < table.length ; i++){
+		Json.simploniens = Json.simploniens.concat(table[i].output);
+	}
 	return Json ;
 }
 
