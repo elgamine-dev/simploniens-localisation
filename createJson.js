@@ -29,8 +29,8 @@ function getDataGsheets(table){
 			console.log(err.stack);
 		})
 		.then(function(result){
-			console.log(result);
-			// next(result, table);
+			// console.log(result);
+			next(result, table);
 		});
 	}
 }
@@ -38,7 +38,8 @@ function getDataGsheets(table){
 /* Lorsqu'une spreadsheet a été extraite, on réorganise le fichier Json comme prédéfini dans les keys de values.js . 
 Les valeurs undefined sont remplacées par des chaines de caractères vides. */
 function next(result, table){
-	groupTable[curseur].output = reorganizeJson(result, values);
+	table[curseur].output = reorganizeJson(result, values);
+	console.log(table[curseur].output);
 	curseur ++;
 	if(curseur === table.length){
 		var fileJson = createJson(groupTable[0].output);
@@ -47,14 +48,19 @@ function next(result, table){
 }
 
 function reorganizeJson(data, keys){
-	return data.map(function(item){
-		var output = {};
-		createId(output, item.nom, item.prenom);
-		for(var k in keys){
-			output[k] = item[keys[k]] || '';
-		}
-		return output;
-	});
+	var multiTable = [];
+	for(var i = 0; i < data.length ; i++){
+		var promo = data[i].map(function(item){
+			var output = {};
+			createId(output, item.nom, item.prenom);
+			for(var k in keys){
+				output[k] = item[keys[k]] || '';
+			}
+			return output;
+		});
+		multiTable = multiTable.concat(promo);
+	}
+	return multiTable;
 }
 
 function createId(object, nom, prenom){
