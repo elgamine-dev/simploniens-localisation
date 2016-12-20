@@ -9,7 +9,8 @@ var curseur = 0;
 /* Tableau regroupant les informations selon la spreadsheet appelée */
 var groupTable= [
 	{
-		spreadsheetId: config.spreadsheetIdToulouse,
+		spreadsheetId: config.toulouse.spreadsheetId,
+		worksheet: config.toulouse.worksheet,
 	}
 ];
 
@@ -21,15 +22,15 @@ function getDataGsheets(table){
 	for (var i = 0; i < table.length; i++){
 		gsjson({
 			spreadsheetId: table[i].spreadsheetId,
+			worksheet: table[i].worksheet,
 		})
 		.catch(function(err){
 			console.log(err.message);
 			console.log(err.stack);
 		})
 		.then(function(result){
-			// console.log(result);
-			next(result, table);
-			
+			console.log(result);
+			// next(result, table);
 		});
 	}
 }
